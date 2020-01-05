@@ -1,12 +1,9 @@
 {
-  "name": "vue-template",
-  "version": "1.0.0",
+  "name": "my-app",
+  "version": "0.0.1",
   "description": "",
   "main": "index.js",
-  "sideEffects": [
-    "*.css",
-    "*.less"
-  ],
+  "sideEffects": ["*.css", "*.less"],
   "scripts": {
     "start": "webpack-dev-server   --config build/webpack.dev.config.js",
     "b": "webpack --progress --config build/webpack.pro.config.js ",
@@ -59,18 +56,11 @@
     "env": {
       "node": true
     },
-    "extends": [
-      "plugin:vue/essential",
-      "eslint:recommended"
-    ],
+    "extends": ["plugin:vue/essential", "eslint:recommended"],
     "rules": {},
     "parserOptions": {
       "parser": "babel-eslint"
     }
   },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not ie <= 8"
-  ]
+  "browserslist": ["> 1%", "last 2 versions", "not ie <= 8"]
 }
