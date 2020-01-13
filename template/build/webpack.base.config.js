@@ -16,8 +16,8 @@ module.exports = {
   },
   output: {
     path: webpackConfig.buildPath,
-    filename: util.assetsPath("[name].[chunkHash:7].js"),
-    chunkFilename: util.assetsPath("[id].[chunkHash:7].js"),
+    filename: util.assetsPath("js/[name].[chunkHash:7].js"),
+    chunkFilename: util.assetsPath("js/[id].[chunkHash:7].js"),
     publicPath: webpackConfig.isDev ? webpackConfig.assetsPublicPath : ""
   },
   resolve: {
@@ -30,7 +30,8 @@ module.exports = {
     rules: [
       {
         test: /\.(sa|sc|c)ss$/,
-        //include: [APP_PATH],
+        exclude: [APP_PATH],
+        include: [path.resolve(ROOT_PATH, "node_modules")],
         use: [
           {
             loader: MiniCssExtractPlugin.loader,
@@ -42,8 +43,44 @@ module.exports = {
           {
             loader: "css-loader",
             options: {
-              sourceMap: webpackConfig.isDev,
+              sourceMap: false,
               importLoaders: 1
+            }
+          },
+          {
+            loader: "sass-loader"
+          },
+          {
+            loader: "postcss-loader",
+            options: {
+              plugins: [
+                require("autoprefixer")({
+                  overrideBrowserslist: ["ie 9-11", "last 5 version"] //兼容IE9到11，所有浏览器最近五个版本
+                })
+              ]
+            }
+          }
+        ]
+      },
+      {
+        test: /\.(sa|sc|c)ss$/,
+        include: [APP_PATH],
+        exclude: [path.resolve(ROOT_PATH, "node_modules")],
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              hmr: webpackConfig.isDev,
+              reloadAll: true
+            }
+          },
+          {
+            loader: "css-loader",
+            options: {
+              sourceMap: true,
+              importLoaders: 1,
+              modules: true,
+              localIdentName: "[hash:base64:6]"
             }
           },
           {
@@ -66,10 +103,17 @@ module.exports = {
         loader: "vue-loader"
       },
       {
+        test: /\.js$/,
+        use: {
+          loader: "babel-loader"
+        },
+        include: [APP_PATH]
+      },
+      {
         test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
         use: [
           `url-loader?limit=3000&minetype=image/svg+xml&name=${util.assetsPath(
-            "[name].[hash:7].[ext]"
+            "svg/[name].[hash:7].[ext]"
           )}`
         ]
       },
@@ -77,7 +121,7 @@ module.exports = {
         test: /\.(png|jpg|jpeg|gif)(\?v=\d+\.\d+\.\d+)?$/i,
         use: [
           `url-loader?limit=3000&name=${util.assetsPath(
-            "[name].[hash:7].[ext]"
+            "img/[name].[hash:7].[ext]"
           )}`
         ],
         include: [APP_PATH],
@@ -85,7 +129,9 @@ module.exports = {
       },
       {
         test: /\.json/,
-        use: [`json-loader?name=${util.assetsPath("[name].[hash:7].[ext]")}`],
+        use: [
+          `json-loader?name=${util.assetsPath("json/[name].[hash:7].[ext]")}`
+        ],
         type: "javascript/auto",
         include: [APP_PATH]
       }
@@ -102,8 +148,8 @@ module.exports = {
       }
     }),
     new MiniCssExtractPlugin({
-      filename: util.assetsPath("[name].[chunkHash:7].css"),
-      chunkFilename: util.assetsPath("[id].[chunkHash:7].css")
+      filename: util.assetsPath("css/[name].[chunkHash:7].css"),
+      chunkFilename: util.assetsPath("css/[id].[chunkHash:7].css")
     })
   ],
   devtool: webpackConfig.devtool,

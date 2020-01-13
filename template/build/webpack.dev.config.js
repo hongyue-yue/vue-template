@@ -1,4 +1,5 @@
 const merge = require("webpack-merge");
+
 const webpackBaseConfig = require("./webpack.base.config");
 const { webpackConfig } = require("../config");
 const webpack = require("webpack");
@@ -15,7 +16,7 @@ const config = merge(webpackBaseConfig, {
     historyApiFallback: true,
     disableHostCheck: true,
     stats: "errors-only",
-    host: "0.0.0.0",
+    host: "localhost",
     proxy: webpackConfig.devserverProxy
   },
   plugins: [

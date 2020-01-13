@@ -1,5 +1,5 @@
 const path = require("path");
-const { version } = require("../package.json");
+//const { version } = require("../package.json");
 
 const config = {
   dev: {
@@ -16,7 +16,7 @@ const config = {
     buildPath: path.resolve(__dirname, "../dist"),
     assetsPublicPath: "./",
     productionSourceMap: true,
-    devtool: false
+    devtool: "cheap-module-eval-source-map"
   }
 };
 
