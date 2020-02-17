@@ -5,7 +5,7 @@ module.exports = {
         sourceType: "module"
     },
     env: {
-        browser: true
+        browser: true,
     },
 
     extends: ["plugin:vue/essential"],
@@ -14,10 +14,10 @@ module.exports = {
 
     rules: {
         // allow paren-less arrow functions
-        "arrow-parens": 0,
+        "arrow-parens": "off",
         // allow async-await
-        "generator-star-spacing": 0,
+        "generator-star-spacing": "off",
         // allow debugger during development
-        "no-debugger": process.env.NODE_ENV === "production" ? 2 : 0
+        "no-debugger": process.env.NODE_ENV === "production" ? "error" : "off"
     }
 };
